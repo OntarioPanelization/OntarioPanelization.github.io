@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Model Viewer</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f0f2f5; text-align: center; }
+        .container { padding: 2rem; }
+        #ar-link { display: none; } /* Hide the link initially */
+        .message { font-size: 1.2rem; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a id="ar-link" rel="ar">
+            <!-- An invisible image is required for the `rel="ar"` link to work -->
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="AR Model Thumbnail" />
+        </a>
+        <p id="status-message" class="message">Loading AR Experience...</p>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const messageElement = document.getElementById('status-message');
+            try {
+                // Get the current URL and look for a 'model' parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const modelUrl = urlParams.get('model');
+
+                if (modelUrl) {
+                    // If a model URL is found, update the hidden <a> tag's href
+                    const arLink = document.getElementById('ar-link');
+                    
+                    // For iOS, we must append #apple_ar_quick_look
+                    arLink.href = modelUrl + '#apple_ar_quick_look';
+                    
+                    // Automatically "click" the link to launch AR Quick Look
+                    arLink.click();
+                    
+                    // Update the message for the user
+                    messageElement.textContent = 'Redirecting to AR viewer. If nothing happens, please ensure you are on an AR-compatible iOS device.';
+                } else {
+                    // If no model URL is provided, show an error
+                    messageElement.textContent = 'Error: No model URL specified.';
+                }
+            } catch (error) {
+                messageElement.textContent = 'An error occurred while loading the model: ' + error.message;
+                console.error(error);
+            }
+        };
+    </script>
+</body>
+</html>
