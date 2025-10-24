@@ -67,7 +67,7 @@
                 } else if (androidModelUrl) { // Otherwise, if we have an Android model, use it
                     // Assume Android for all other devices
                     messageElement.textContent = 'Launching AR on your Android device...';
-                    const sceneViewerUrl = `intent://arvr.google.com/scene-viewer/1.0?file=${androidModelUrl}&mode=ar_preferred#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=${androidModelUrl};end;`;
+                    const sceneViewerUrl = `intent://arvr.google.com/scene-viewer/1.0?file=${androidModelUrl}&mode=ar_preferred#Intent;scheme=http;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=${androidModelUrl};end;`;
                     window.location.href = sceneViewerUrl;
                 }
 
